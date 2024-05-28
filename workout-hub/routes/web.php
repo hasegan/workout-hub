@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+
+Route::resource('categories', CategoryController::class);
+
+Route::resource('trainings', TrainingController::class);
+
+Route::get('checkExistingCategory/{category}', 'CategoryController@checkExistingCategory');
+
+Route::get('cancelEditCategory/{id}', 'CategoryController@cancelEditCategory');
