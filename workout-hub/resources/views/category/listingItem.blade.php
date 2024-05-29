@@ -1,20 +1,24 @@
-<tr id="listing_category_{{ $category->id }}" class="row justify-content-center text-center">
-    <td class="col-sm-2">{{ $category->id }}</td>
-    <td class="col-sm-8">{{ $category->name }}</td>
-    <td class="col-sm-2">
+<div class="row justify-content-center pb-3 pt-3 border text-center" id="listing_category_{{ $category->id }}">
+    <div class="col-sm-2">
+        {{ $category->id }}
+    </div>
+    <div class="col-sm-6">
+        {{ $category->name }}
+    </div>
+    <div class="col-sm-4">
         <button class="btn btn-info btn-sm" onclick="editCategory({{ $category->id }})">
             Edit
         </button>
-        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#categoryModal"
-            data-id="{{ $category->id }}">
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+            data-target="#categoryModal{{ $category->id }}" data-id="{{ $category->id }}">
             Delete
         </button>
-    </td>
-</tr>
+    </div>
+</div>
 
 {{-- delete modal --}}
-<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="categoryModal{{ $category->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="categoryModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

@@ -7,10 +7,10 @@
         <div class="navbar navbar-inverse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
-                    <a class="nav-link" href="/categories">Categories</a>
+                    <a class="{{ Route::is('categories') ? 'active' : '' }} nav-link" href="/categories">Categories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/trainings">Trainings</a>
+                    <a class="{{ Route::is('trainings') ? 'active' : '' }} nav-link" href="/trainings">Trainings</a>
                 </li>
             </ul>
         </div>

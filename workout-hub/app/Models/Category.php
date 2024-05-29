@@ -19,4 +19,14 @@ class Category extends Model
 
         return $new;
     }
+
+    public function getItem($id)
+    {
+        return $this->find($id);
+    }
+
+    public function trainings()
+    {
+        return $this->hasMany('Training');
+    }
 }

@@ -10,16 +10,14 @@ class CategoryController extends Controller
     protected $category;
 
 
-    public function __construct(
-        Category $category
-    ) {
-
+    public function __construct(Category $category)
+    {
         $this->category = $category;
     }
 
     public function index()
     {
-        $categories = $this->category->orderBy('created_at', 'DESC')->get();
+        $categories = $this->category->orderBy('name')->get();
 
         return view('category.listing')->with(compact('categories'));
     }
@@ -66,7 +64,6 @@ class CategoryController extends Controller
     public function cancelEditCategory($id)
     {
         $category = $this->category->getItem($id);
-
         return view('category.listingItem')->withCategory($category);
     }
 }

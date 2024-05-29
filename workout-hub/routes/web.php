@@ -20,10 +20,10 @@ Route::get('/', function () {
 });
 
 
-Route::resource('categories', CategoryController::class);
+Route::resource('categories', CategoryController::class)->name('index', 'categories');
 
-Route::resource('trainings', TrainingController::class);
+Route::resource('trainings', TrainingController::class)->name('index', 'trainings');;
 
-Route::get('checkExistingCategory/{category}', 'CategoryController@checkExistingCategory');
+Route::get('cancelEditCategory/{id}', [CategoryController::class, 'cancelEditCategory']);
 
-Route::get('cancelEditCategory/{id}', 'CategoryController@cancelEditCategory');
+Route::get('cancelEditTraining/{id}', [TrainingController::class, 'cancelEditTraining']);
