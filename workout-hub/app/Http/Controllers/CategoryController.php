@@ -66,4 +66,14 @@ class CategoryController extends Controller
         $category = $this->category->getItem($id);
         return view('category.listingItem')->withCategory($category);
     }
+
+    public function checkExistingCategory($category)
+    {
+        $item = $this->category->getItemByName($category);
+
+        if ($item != null) {
+            return 1;
+        }
+        return 0;
+    }
 }

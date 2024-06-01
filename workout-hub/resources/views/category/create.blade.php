@@ -2,7 +2,10 @@
     @csrf
     <div class="col-sm-6  text-center">
         <label for="name">Category name:</label>
-        <input name="name" type="text" placeholder=". . ." require autocomplete="off" id="name">
+        <input name="name" type="text" placeholder=". . ." require autocomplete="off" id="name"
+            onkeydown="removeWarningForName()" onkeyup="checkExistingCategory()">
+        <span id="check-name" class="row justify-content-center text-danger ml-5"></span>
+        <span id="check-valid-name" class="row justify-content-center text-danger ml-5"></span>
     </div>
     <div class="col-sm-6">
         <button onclick="storeCategory()" type="button" class="btn btn-success btn-sm"> Submit</button>

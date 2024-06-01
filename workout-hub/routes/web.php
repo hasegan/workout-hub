@@ -27,3 +27,5 @@ Route::resource('trainings', TrainingController::class)->name('index', 'training
 Route::get('cancelEditCategory/{id}', [CategoryController::class, 'cancelEditCategory']);
 
 Route::get('cancelEditTraining/{id}', [TrainingController::class, 'cancelEditTraining']);
+
+Route::get('checkExistingCategory/{category}', [CategoryController::class, 'checkExistingCategory']);

@@ -25,6 +25,11 @@ class Category extends Model
         return $this->find($id);
     }
 
+    public function getItemByName($item)
+    {
+        return $this->where('name', $item)->first();
+    }
+
     public function trainings()
     {
         return $this->hasMany('Training');

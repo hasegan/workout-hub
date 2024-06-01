@@ -20,11 +20,17 @@ function cancelCreateCategory() {
 }
 // store category
 function storeCategory() {
-    var data = $("#add_category").serializeArray();
-    $.post("categories", data, function (data) {
-        $("#listing_categories").prepend(data);
-        $("#add_category").remove();
-    });
+    var exist = $("#check-valid-name").text().length;
+
+    if (exist == 0) {
+        if (validationFieldForCategory()) {
+            var data = $("#add_category").serializeArray();
+            $.post("categories", data, function (data) {
+                $("#listing_categories").prepend(data);
+                $("#add_category").remove();
+            });
+        }
+    }
 }
 //edit category
 function editCategory(id) {
@@ -40,18 +46,96 @@ function cancelEditCategory(id) {
 }
 //update category
 function updateCategory(id) {
-    // if (validationFieldForCategory(id)) {
-    var data = $("#edit_category_" + id).serializeArray();
+    var exist = $("#check-valid-name_" + id).text().length;
 
-    $.ajax({
-        url: "/categories/" + id,
-        type: "PUT",
-        data: data,
-        success: function (result) {
-            $("#edit_category_" + id).replaceWith(result);
-        },
-    });
-    // }
+    if (exist == 0) {
+        if (validationFieldForCategory(id)) {
+            var data = $("#edit_category_" + id).serializeArray();
+
+            $.ajax({
+                url: "/categories/" + id,
+                type: "PUT",
+                data: data,
+                success: function (result) {
+                    $("#edit_category_" + id).replaceWith(result);
+                },
+            });
+        }
+    }
+}
+// verify if the category already exists
+function checkExistingCategory(id) {
+    if (id) {
+        var category = $("#name_" + id).val();
+    } else {
+        var category = $("#name").val();
+    }
+
+    var i = 0;
+
+    if (category != "") {
+        $.get("checkExistingCategory/" + category, {}, function (data) {
+            if (data == 1) {
+                if (id) {
+                    $("#check-valid-name_" + id).text("");
+                    $("#check-valid-name_" + id).text(
+                        "Category already exists."
+                    );
+                    i++;
+                } else {
+                    $("#check-valid-name").text("");
+                    $("#check-valid-name").text("Category already exists.");
+                    i++;
+                }
+            } else {
+                if (id) {
+                    $("#check-valid-name_" + id).text("");
+                } else {
+                    $("#check-valid-name").text("");
+                }
+            }
+            if (i != 0) {
+                return true; //
+            }
+            if (i == 0) {
+                return false; //
+            }
+        });
+    }
+}
+
+function validationFieldForCategory(id) {
+    var i = 0;
+
+    if (id) {
+        var name = $("#name_" + id).val();
+
+        if (name == null || name == 0 || name == "") {
+            $("#check-name_" + id).text("Name is required");
+            i++;
+        }
+    } else {
+        var name = $("#name").val();
+
+        if (name == null || name == 0 || name == "") {
+            $("#check-name").text("Name is required");
+            i++;
+        }
+    }
+
+    if (i != 0) {
+        return false;
+    }
+    return true;
+}
+// remove name warning
+function removeWarningForName(id) {
+    if ($("input[name$='name']")) {
+        if (id) {
+            return $("#check-name_" + id).text("");
+        }
+        return $("#check-name").text("");
+    }
 }
 
 // -------------- CODE FOR TRAINING -----------
