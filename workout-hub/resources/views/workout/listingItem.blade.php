@@ -1,4 +1,4 @@
-<div class="card m-4" id="listing_training_{{ $training->id }}">
+<div class="card m-4 p-0" id="listing_training_{{ $training->id }}">
     <div class="card-header">
         {{ $training->name }}
     </div>

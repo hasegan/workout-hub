@@ -128,7 +128,7 @@ function validationFieldForCategory(id) {
     }
     return true;
 }
-// remove name warning
+// remove name warning (also used for training name)
 function removeWarningForName(id) {
     if ($("input[name$='name']")) {
         if (id) {
@@ -151,11 +151,13 @@ function cancelCreateTraining() {
 }
 // save category
 function storeTraining() {
-    var data = $("#add_training").serializeArray();
-    $.post("trainings", data, function (data) {
-        $("#listing_trainings").prepend(data);
-        $("#add_training").remove();
-    });
+    if (validationFieldForTraining()) {
+        var data = $("#add_training").serializeArray();
+        $.post("trainings", data, function (data) {
+            $("#listing_trainings").prepend(data);
+            $("#add_training").remove();
+        });
+    }
 }
 // edit training
 function editTraining(id) {
@@ -171,14 +173,85 @@ function cancelEditTraining(id) {
 }
 // update training
 function updateTraining(id) {
-    var data = $("#edit_training_" + id).serializeArray();
+    if (validationFieldForTraining(id)) {
+        var data = $("#edit_training_" + id).serializeArray();
 
-    $.ajax({
-        url: "/trainings/" + id,
-        type: "PUT",
-        data: data,
-        success: function (result) {
-            $("#edit_training_" + id).replaceWith(result);
-        },
-    });
+        $.ajax({
+            url: "/trainings/" + id,
+            type: "PUT",
+            data: data,
+            success: function (result) {
+                $("#edit_training_" + id).replaceWith(result);
+            },
+        });
+    }
+}
+
+// validate field for training
+function validationFieldForTraining(id) {
+    var i = 0;
+
+    if (id) {
+        var name = $("#name_" + id).val();
+        var content = $("#content_" + id).val();
+        var category = $("#category_id_" + id).val();
+
+        if (name == null || name == 0 || name == "") {
+            $("#check-name_" + id).text("Name is required");
+            i++;
+        }
+
+        if (content == null || content == 0 || content == "") {
+            $("#check-content_" + id).text("Content is required");
+            i++;
+        }
+
+        if (category == null || category == 0 || category == "") {
+            $("#check-category_id_" + id).text("Category is required");
+            i++;
+        }
+    } else {
+        var name = $("#name").val();
+        var content = $("#content").val();
+        var category = $("#category_id").val();
+
+        if (name == null || name == 0 || name == "") {
+            $("#check-name").text("Name is required");
+            i++;
+        }
+
+        if (content == null || content == 0 || content == "") {
+            $("#check-content").text("Content is required");
+            i++;
+        }
+
+        if (category == null || category == 0 || category == "") {
+            $("#check-category_id").text("Category is required");
+            i++;
+        }
+    }
+
+    if (i != 0) {
+        return false;
+    }
+    return true;
+}
+
+// remove content warning
+function removeWarningForTrainingContent(id) {
+    if ($("input[name$='content']")) {
+        if (id) {
+            return $("#check-content_" + id).text("");
+        }
+        return $("#check-content").text("");
+    }
+}
+// remove warning for category
+function removeWarningForTrainingCategory(id) {
+    if ($("input[name$='category_id']")) {
+        if (id) {
+            return $("#check-category_id_" + id).text("");
+        }
+        return $("#check-category_id").text("");
+    }
 }

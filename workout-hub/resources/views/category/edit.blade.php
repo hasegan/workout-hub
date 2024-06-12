@@ -6,7 +6,8 @@
     <div class="col-sm-6 ">
         <label for="name">Category name:</label>
         <input name="name" type="text" value="{{ $category->name }}" id="name_{{ $category->id }}"
-            onkeydown="removeWarningForName({{ $category->id }})" onkeyup="checkExistingCategory({{ $category->id }})">
+            onkeydown="removeWarningForName({{ $category->id }})" onkeyup="checkExistingCategory({{ $category->id }})"
+            autocomplete="off">
         <span id="check-name_{{ $category->id }}" class="row justify-content-center text-danger ml-5"></span>
         <span id="check-valid-name_{{ $category->id }}" class="row justify-content-center text-danger ml-5"></span>
 
